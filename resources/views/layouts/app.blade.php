@@ -11,8 +11,9 @@
     <header>
         <nav>
             <ul>
-                <li><a href="#">I nostri fumetti</a></li>
-                <li><a href="#">Inserisci un nuovo fumetto</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('comics.index') }}">I nostri fumetti</a></li>
+                <li><a href="{{ route('comics.create') }}">Inserisci un nuovo fumetto</a></li>
             </ul>
         </nav>
     </header>
