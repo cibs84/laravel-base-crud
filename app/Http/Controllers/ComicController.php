@@ -40,8 +40,12 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {   
-        // Assegno i dati dal form
+        // Valido i dati inseriti nel form
+        $request->validate($this->getValidationRules());
+        
+        // Assegno i dati del form
         $form_data = $request->all();
+
         // Creo nuova riga in cui salvo i dati del form nel database
         $new_comic = new Comic();
         // $new_comic->title = $form_data['title'];
@@ -54,6 +58,7 @@ class ComicController extends Controller
 
         // Metodo alternativo al codice commentato sopra per salvare i dati del form nel database 
         $new_comic->fill($form_data);
+
         $new_comic->save();
 
         return redirect()->route('comics.show', ['comic' => $new_comic->id]);
@@ -102,6 +107,10 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Valido i dati inseriti nel form
+        $request->validate($this->getValidationRules());
+
+        // Assegno i dati del form
         $form_data = $request->all();
 
         $comic_to_update = Comic::findOrFail($id);
@@ -122,5 +131,17 @@ class ComicController extends Controller
         $comic_to_delete->delete();
 
         return redirect()->route('comics.index');
+    }
+
+    protected function getValidationRules() {
+        return [
+            'title' => 'required|string|max:50',
+            'description' => 'required|string|max:50000',
+            'thumb' => 'required|url|max:50000',
+            'price' => 'numeric|max:3000',
+            'series' => 'string|max:50',
+            'sale_date' => 'date',
+            'type' => 'string|max:50'
+        ];
     }
 }
