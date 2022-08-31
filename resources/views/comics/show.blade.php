@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main_content')
-    <h1>{{ $comic['title'] }}</h1>
+    <h1>{{ $comic->title }}</h1>
     <div>
         <img src="{{ $comic->thumb }}" alt="" width="200px">
         <div>
