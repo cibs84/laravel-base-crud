@@ -10956,7 +10956,7 @@ form {
   padding: 0 10rem;
 }
 .section-show .container .card img {
-  width: 100%;
+  height: 100%;
 }
 .section-show .container .card .card-body div:first-of-type {
   margin-bottom: 2rem;
