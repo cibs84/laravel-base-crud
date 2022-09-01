@@ -1,0 +1,22 @@
+header {
+    background-color: #0d6efd;
+    text-align: center;
+    height: 5rem;
+
+    li {
+        display: inline-block;
+        line-height: 5rem;
+        margin: 0 1rem;
+        border-bottom: 0.2rem white solid;
+
+        a {
+            color: white;
+            font-size: 1.2rem;
+            padding: 1.4rem 0;
+
+        }
+        .current {
+            border-bottom: 5px solid #fff; 
+        }
+    }
+}

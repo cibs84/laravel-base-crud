@@ -12,12 +12,17 @@ class ComicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $comics_array = Comic::all();
 
+        // Prendo il parametro che viene passato dalla destroy quando viene eseguita la cancellazione
+        $request_data = $request->all();
+        $deleted = $request_data;
+
         $data = [
-            'comics_array' => $comics_array
+            'comics_array' => $comics_array,
+            'deleted' => $deleted
         ];
         return view('comics.index', $data);
     }
@@ -61,7 +66,7 @@ class ComicController extends Controller
 
         $new_comic->save();
 
-        return redirect()->route('comics.show', ['comic' => $new_comic->id]);
+        return redirect()->route('comics.show', ['comic' => $new_comic->id, 'created' => true]);
     }
 
     /**
@@ -70,12 +75,20 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $comic = Comic::findOrFail($id);
 
+        // Prendo i parametri che vengono passati da store quando viene creato un nuovo fumetto e da update quando viene modificato.
+        // Assegniamo null come valore SE il parametro non ci viene passato e quindi non è settato, altrimenti visualizziamo un errore relativo alla/e variabile/i non definite
+        $request_data = $request->all();
+        $created = isset($request_data['created']) ? $request_data['created'] : null;
+        $updated = isset($request_data['updated']) ? $request_data['updated'] : null;
+
         $data = [
-            'comic' => $comic
+            'comic' => $comic,
+            'created' => $created,
+            'updated' => $updated
         ];
 
         return view('comics.show', $data);
@@ -116,7 +129,7 @@ class ComicController extends Controller
         $comic_to_update = Comic::findOrFail($id);
         $comic_to_update->update($form_data);
        
-        return redirect()->route('comics.show', ['comic' => $comic_to_update->id]);
+        return redirect()->route('comics.show', ['comic' => $comic_to_update->id, 'updated' => true]);
     }
 
     /**
@@ -130,7 +143,11 @@ class ComicController extends Controller
         $comic_to_delete = Comic::findOrFail($id);
         $comic_to_delete->delete();
 
-        return redirect()->route('comics.index');
+        $data = [
+            'deleted' => true
+        ];
+
+        return redirect()->route('comics.index', $data);
     }
 
     protected function getValidationRules() {
@@ -138,7 +155,7 @@ class ComicController extends Controller
             'title' => 'required|string|max:50',
             'description' => 'required|string|max:50000',
             'thumb' => 'required|url|max:50000',
-            'price' => 'numeric|max:3000',
+            'price' => 'numeric|between:0,3000',
             'series' => 'string|max:50',
             'sale_date' => 'date',
             'type' => 'string|max:50'

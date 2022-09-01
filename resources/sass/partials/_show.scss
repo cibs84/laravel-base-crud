@@ -1,0 +1,22 @@
+.section-show {
+    display: flex;
+    align-items: center;
+    height: calc(100vh - 140px);
+
+    .container {
+        padding: 0 10rem;
+    
+        .card {
+        
+            img {
+                width: 100%;
+            }
+            .card-body {
+        
+                div:first-of-type {
+                    margin-bottom: 2rem;
+                }
+            }
+        }
+    }
+}
