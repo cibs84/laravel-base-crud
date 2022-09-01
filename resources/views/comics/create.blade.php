@@ -49,7 +49,7 @@
         <br>
 
         <div>
-            <label for="sale_date">Data Sconto</label>
+            <label for="sale_date">Data di uscita</label>
             <input type="date" name="sale_date" id="sale_date"  value='{{ old('sale_date') }}'>
         </div>
         <br>

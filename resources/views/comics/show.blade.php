@@ -10,7 +10,7 @@
             <div>Copertina: {{ $comic->thumb }}</div>
             <div>Prezzo: {{ $comic->price }}</div>
             <div>Serie: {{ $comic->series }}</div>
-            <div>Data Sconto: {{ $comic->sale_date }}</div>
+            <div>Data di uscita: {{ $comic->sale_date }}</div>
             <div>Tipologia: {{ $comic->type }}</div>
         </div>
     </div>
